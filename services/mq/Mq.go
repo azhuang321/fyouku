@@ -15,7 +15,7 @@ func Connect() (*amqp.Connection, error) {
 	return conn, err
 }
 
-// 发送端函数
+// 简单的生产者(用于简单模式和worker模式)
 func Publish(exchange string, queueName string, body string) error {
 	// 建立连接
 	conn, err := Connect()
@@ -51,7 +51,7 @@ func Publish(exchange string, queueName string, body string) error {
 	return err
 }
 
-// 接收端函数
+// 简单的消费者(用于简单模式和worker模式)
 func Consumer(exchange string, queueName string, callback Callback) {
 	// 建立连接
 	conn, err := Connect()
@@ -105,13 +105,7 @@ func Consumer(exchange string, queueName string, callback Callback) {
 	<-forever
 }
 
-func BytesToString(b *[]byte) *string {
-	s := bytes.NewBuffer(*b)
-	r := s.String()
-	return &r
-}
-
-// 订阅模式 - 生产者
+// 制定模式和路由的 - 生产者(用于发布订阅模式/路由模式/主题模式)
 func PublishEx(exchange string, types string, routingKey string, body string) error {
 	// 建立连接
 	conn, err := Connect()
@@ -146,7 +140,7 @@ func PublishEx(exchange string, types string, routingKey string, body string) er
 	return err
 }
 
-// 订阅模式 - 消费者
+// 制定模式和路由的 - 消费者(用于发布订阅模式/路由模式/主题模式)
 func ConsumerEx(exchange string, types string, routingKey string, callback Callback) {
 	// 建立连接
 	conn, err := Connect()
@@ -218,4 +212,154 @@ func ConsumerEx(exchange string, types string, routingKey string, callback Callb
 	}()
 	fmt.Printf("Waiting for messages\n")
 	<-forever
+}
+
+func BytesToString(b *[]byte) *string {
+	s := bytes.NewBuffer(*b)
+	r := s.String()
+	return &r
+}
+
+// 死信队列 - 消费者
+func ConsumerDlx(exchangeA string, queueAName string, exchangeB string, queueBName string, ttl int, callback Callback) {
+	// 建立连接
+	conn, err := Connect()
+	defer conn.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 创建channel
+	channel, err := conn.Channel()
+	defer channel.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 1)创建A交换机 & 2)A队列 & 3)A交换机和A队列绑定
+	// 1)创建A交换机
+	err = channel.ExchangeDeclare(
+		exchangeA,
+		"fanout",
+		true,
+		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 2)A队列
+	queueA, err := channel.QueueDeclare(
+		queueAName,
+		true,
+		false,
+		false,
+		false,
+		amqp.Table{
+			"x-message-ttl":          ttl,       // 过期时间
+			"x-dead-letter-exchange": exchangeB, // 交换机
+			// "x-dead-letter-queue": "", // 绑定的队列
+			// "x-dead-letter-routing-key": "", // 路由关键字
+		},
+	)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 3)A交换机和A队列绑定
+	err = channel.QueueBind(
+		queueA.Name,
+		"",
+		exchangeA,
+		false,
+		nil,
+	)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// 1)创建B交换机 & 2)B队列 & 3)B交换机和B队列绑定
+	// 1)创建B交换机
+	err = channel.ExchangeDeclare(
+		exchangeB,
+		"fanout",
+		true,
+		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 2)B队列
+	queueB, err := channel.QueueDeclare(
+		queueBName,
+		true,
+		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 3)B交换机和B队列绑定
+	err = channel.QueueBind(
+		queueB.Name,
+		"",
+		exchangeB,
+		false,
+		nil,
+	)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// 接收消息
+	msgs, err := channel.Consume(queueB.Name, "", false, false, false, false, nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	forever := make(chan bool)
+	go func() {
+		for d := range msgs {
+			s := BytesToString(&(d.Body))
+			callback(*s) // 回调函数
+			d.Ack(false) // 应答
+		}
+	}()
+	fmt.Printf("Waiting for messages")
+	<-forever
+}
+
+// 死信队列 - 生产者
+func PublishDlx(exchangeA string, body string) error {
+	// 建立连接
+	conn, err := Connect()
+	defer conn.Close()
+	if err != nil {
+		return err
+	}
+	// 创建channel
+	channel, err := conn.Channel()
+	defer channel.Close()
+	if err != nil {
+		return err
+	}
+	err = channel.Publish(exchangeA, "", false, false, amqp.Publishing{
+		DeliveryMode: amqp.Persistent,
+		ContentType:  "text/plain",
+		Body:         []byte(body),
+	})
+	return err
 }

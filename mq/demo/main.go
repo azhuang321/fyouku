@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// 简短模式及worker模式的消费者
 func main() {
 	mq.Consumer("", "fyouku_demo", callback)
 }

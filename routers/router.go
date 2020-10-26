@@ -66,4 +66,7 @@ func init() {
 	beego.Router("/mq/PushDirect", &controllers.MqDemoController{}, "post:PushDirect")
 	beego.Router("/mq/PushTopic", &controllers.MqDemoController{}, "post:PushTopic")
 	beego.Router("/mq/PushTopicTwo", &controllers.MqDemoController{}, "post:PushTopicTwo")
+	beego.Router("/mq/PushDlx", &controllers.MqDemoController{}, "post:PushDlx")
+	beego.Router("/mq/PushTwoDlx", &controllers.MqDemoController{}, "post:PushTwoDlx")
+
 }

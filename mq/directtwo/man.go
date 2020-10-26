@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// 路由模式的消费者
 func main() {
 	mq.ConsumerEx("fyouku.demo.direct", "direct", "two", callback)
 }

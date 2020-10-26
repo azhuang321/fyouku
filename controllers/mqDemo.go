@@ -137,3 +137,61 @@ func (c *MqDemoController) PushTopicTwo() {
 	}()
 	c.Ctx.WriteString("direct")
 }
+
+/*
+// 简单模式
+mq.Publish("", "fyouku_demo", "hello"+strconv.Itoa(count))
+
+// 订阅(广播)模式push
+mq.PublishEx("fyouku.demo.fanout", "fanout", "", "fanout"+strconv.Itoa(count))
+
+// 路由模式
+mq.PublishEx("fyouku.demo.direct", "direct", "two", "direct"+strconv.Itoa(count))
+
+// 主题模式
+mq.PublishEx("fyouku.demo.topic", "topic", "fyouku.video", "fyouku.video"+strconv.Itoa(count))
+
+(交换机)(模式)(路由)(消息)
+*/
+
+/*
+	死信队列push
+	该接口会把消息推到A队列
+	当A队列出现死信会由A队列的消费者将死信移至B队列
+	这个机制是由ConsumerDlx函数中的x-dead-letter-exchange(死信交换机)来绑定的
+*/
+func (c *MqDemoController) PushDlx() {
+	go func() {
+		count := 0
+		for {
+			if count >= 100 {
+				break
+			}
+			mq.PublishDlx("fyouku.dlx.a", "dlx"+strconv.Itoa(count))
+			count++
+			time.Sleep(1 * time.Second)
+			fmt.Println("1: " + strconv.Itoa(count))
+		}
+	}()
+	c.Ctx.WriteString("dlxOne")
+}
+
+/*
+	发布订阅模式的生产者接口, 会直接把消息推到B队列, 然后从B的消费者打印出来
+	该接口用来单独测试B队列是否能够正常运行
+*/
+func (c *MqDemoController) PushTwoDlx() {
+	go func() {
+		count := 0
+		for {
+			if count >= 19 {
+				break
+			}
+			mq.PublishEx("fyouku.dlx.b", "fanout", "", "dlxtwo"+strconv.Itoa(count))
+			count++
+			time.Sleep(1 * time.Second)
+			fmt.Println("2: " + strconv.Itoa(count))
+		}
+	}()
+	c.Ctx.WriteString("dlxTwo")
+}

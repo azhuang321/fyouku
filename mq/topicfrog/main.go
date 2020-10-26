@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// 主题模式的消费者
 func main() {
 	mq.ConsumerEx("fyouku.demo.topic", "topic", "*.frog.*", callback)
 }
