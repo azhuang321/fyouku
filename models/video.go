@@ -249,6 +249,7 @@ func RedisGetChannelTop(channelId int) (int64, []VideoData, error) {
 		num = 0
 		res, _ := redis.Values(conn.Do("zrevrange", redisKey, "0", "10", "WITHSCORES"))
 		for k, v := range res {
+			fmt.Println(strconv.Atoi(string(v.([]byte))))
 			if k%2 == 0 {
 				videoId, _ := strconv.Atoi(string(v.([]byte)))
 				videoInfo, err := RedisGetVideoInfo(videoId)

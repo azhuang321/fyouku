@@ -33,7 +33,7 @@ func PoolConnect() redis.Conn {
 }
 
 /*
-接口总的编码示例:
+改造 - 接口总的编码示例:
 
 /crr/golang/beego/demo/models/video.go
 	// 增加redis缓存 - 获取视频详情

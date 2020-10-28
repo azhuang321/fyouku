@@ -1,0 +1,908 @@
+{
+	"info": {
+		"_postman_id": "1522fa51-e8bf-48d6-b1a0-6b1b59fedf2a",
+		"name": "fyouku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "register/save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "15840406976",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/register/save",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"register",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "15840406976",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234561",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099//register/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"",
+								"register",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user/SendMessageDo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "uids",
+									"value": "10,11,12",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "哈哈哈哈哈哈哈",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/user/SendMessageDo",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"user",
+								"SendMessageDo"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "video",
+			"item": [
+				{
+					"name": "video/ChannelAdvert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "channelId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/video/ChannelAdvert",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"video",
+								"ChannelAdvert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video/ChannelHotList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "channelId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/video/ChannelHotList",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"video",
+								"ChannelHotList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video/ChannelRecommendRegionList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "channelId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "regionId",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/video/ChannelRecommendRegionList",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"video",
+								"ChannelRecommendRegionList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video/GetChannelRecomendTypeList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "channelId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "typeId",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/video/GetChannelRecomendTypeList",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"video",
+								"GetChannelRecomendTypeList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video/ChannelVideo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "channelId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "regionId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "typeId",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "end",
+									"value": "y",
+									"type": "text"
+								},
+								{
+									"key": "sort",
+									"value": "episodesUpdateTime",
+									"type": "text"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/video/ChannelVideo",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"video",
+								"ChannelVideo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video/VideoInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/video/VideoInfo",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"video",
+								"VideoInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video/VideoEpisodesList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/video/VideoEpisodesList",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"video",
+								"VideoEpisodesList"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "base",
+			"item": [
+				{
+					"name": "base/ChannelRegion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "channelId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/base/ChannelRegion",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"base",
+								"ChannelRegion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "base/ChannelType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "channelId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/base/ChannelType",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"base",
+								"ChannelType"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "comment",
+			"item": [
+				{
+					"name": "comment/List",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "episodesId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "offset",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/comment/List",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"comment",
+								"List"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comment/Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "8的评论, 这种剧",
+									"type": "text"
+								},
+								{
+									"key": "uid",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "episodesId",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "videoId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/comment/Save",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"comment",
+								"Save"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "top",
+			"item": [
+				{
+					"name": "top/TypeTop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "typeId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/top/TypeTop",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"top",
+								"TypeTop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "top/ChannelTop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "channelId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/top/ChannelTop",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"top",
+								"ChannelTop"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "barrage",
+			"item": [
+				{
+					"name": "/barrage/Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "uid",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "大家撒付款打哈萨克拉发哈",
+									"description": "弹幕内容",
+									"type": "text"
+								},
+								{
+									"key": "currentTime",
+									"value": "1",
+									"description": "播放位置, 秒",
+									"type": "text"
+								},
+								{
+									"key": "episodesId",
+									"value": "3",
+									"description": "集id",
+									"type": "text"
+								},
+								{
+									"key": "videoId",
+									"value": "1",
+									"description": "剧id",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8099/barrage/Save",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"barrage",
+								"Save"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "redis",
+			"item": [
+				{
+					"name": "demo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8099/redis/demo",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"redis",
+								"demo"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "mq",
+			"item": [
+				{
+					"name": "push",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8099/mq/push",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"mq",
+								"push"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PushFanout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8099/mq/PushFanout",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"mq",
+								"PushFanout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PushDirect",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8099/mq/PushDirect",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"mq",
+								"PushDirect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PushTopic",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8099/mq/PushTopic",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"mq",
+								"PushTopic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PushTopicTwo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8099/mq/PushTopicTwo",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"mq",
+								"PushTopicTwo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PushDlx",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8099/mq/PushDlx",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"mq",
+								"PushDlx"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PushTwoDlx",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8099/mq/PushTwoDlx",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8099",
+							"path": [
+								"mq",
+								"PushTwoDlx"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

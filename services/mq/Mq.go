@@ -363,3 +363,24 @@ func PublishDlx(exchangeA string, body string) error {
 	})
 	return err
 }
+
+// 改造
+/*
+// 评论数的改造
+	* 生产者
+	/crr/golang/beego/demo/models/comment.go
+	```
+	func SaveComment...这个方法中
+	```
+	* 消费者
+	/crr/golang/beego/demo/mq/top/main.go
+
+// 批量发送消息的功能
+	* 生产者
+	/crr/golang/beego/demo/models/message.go
+	````
+	func SendMessageUserMq...这个方法中
+	````
+	* 消费者
+	/crr/golang/beego/demo/mq/send/main.go
+*/

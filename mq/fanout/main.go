@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// 发布订阅(广播)模式的消费者
+// 发布订阅(广播)模式的消费者demo
 func main() {
 	mq.ConsumerEx("fyouku.demo.fanout", "fanout", "", callback)
 }

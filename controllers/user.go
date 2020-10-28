@@ -101,6 +101,41 @@ func (c *UserController) LoginDo() {
 }
 
 // 批量发送通知消息
+// func (c *UserController) SendMessageDo() {
+// 	uids := c.GetString("uids")
+// 	content := c.GetString("content")
+// 	if uids == "" {
+// 		c.Data["json"] = ReturnError(4001, "请填写接收人~")
+// 		c.ServeJSON()
+// 		return
+// 	}
+// 	if content == "" {
+// 		c.Data["json"] = ReturnError(4001, "请填写发送内容")
+// 		c.ServeJSON()
+// 		return
+// 	}
+// 	messageId, err := models.SendMessageDo(content)
+// 	if err != nil {
+// 		c.Data["json"] = ReturnError(5000, "发送失败, 请联系客服")
+// 		c.ServeJSON()
+// 		return
+// 	}
+// 	uidConfig := strings.Split(uids, ",")
+// 	for _, v := range uidConfig {
+// 		userId, _ := strconv.Atoi(v)
+// 		// models.SendMessageUser(userId, messageId)
+// 		models.SendMessageUserMq(userId, messageId)
+// 	}
+// 	c.Data["json"] = ReturnSuccess(0, "发送成功~", "", 1)
+// 	c.ServeJSON()
+// 	return
+// }
+
+type SendData struct {
+	UserId    int
+	MessageId int64
+}
+
 func (c *UserController) SendMessageDo() {
 	uids := c.GetString("uids")
 	content := c.GetString("content")
@@ -121,10 +156,40 @@ func (c *UserController) SendMessageDo() {
 		return
 	}
 	uidConfig := strings.Split(uids, ",")
-	for _, v := range uidConfig {
-		userId, _ := strconv.Atoi(v)
-		models.SendMessageUser(userId, messageId)
+	count := len(uidConfig)                // 获取长度
+	sendChan := make(chan SendData, count) // 任务队列
+	closeChan := make(chan bool, count)    // worker监听队列
+
+	// 造任务队列
+	go func() {
+		var data SendData
+		for _, v := range uidConfig {
+			userId, _ := strconv.Atoi(v)
+			data.UserId = userId
+			data.MessageId = messageId
+			sendChan <- data
+		}
+		close(sendChan)
+	}()
+	// 消费掉任务队列
+	for i := 0; i < 5; i++ {
+		go func(sendChan chan SendData, closeChan chan bool) {
+			for t := range sendChan {
+				models.SendMessageUserMq(t.UserId, t.MessageId)
+			}
+			closeChan <- true
+		}(sendChan, closeChan)
 	}
+	for i := 0; i < 5; i++ {
+		<-closeChan
+	}
+	close(closeChan)
+
+	// for _, v := range uidConfig {
+	// 	userId, _ := strconv.Atoi(v)
+	// 	// models.SendMessageUser(userId, messageId)
+	// 	models.SendMessageUserMq(userId, messageId)
+	// }
 	c.Data["json"] = ReturnSuccess(0, "发送成功~", "", 1)
 	c.ServeJSON()
 	return

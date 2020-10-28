@@ -1,6 +1,8 @@
 package models
 
 import (
+	"demo/services/mq"
+	"encoding/json"
 	"time"
 
 	"github.com/astaxie/beego/orm"
@@ -55,6 +57,30 @@ func SaveComment(content string, uid int, episodesId int, videoId int) error {
 		// 修改视频剧集的评论数
 		sql = "update video_episodes set comment=comment+1 where id=?"
 		o.Raw(sql, episodesId).Exec()
+		/*
+			更新排行榜 - 通过MQ来来实现
+			排行榜是根据评论数排序的, 把video_id推给队列, 表示该视频评论数需要+1.
+			这里实现的是生产者, 消费者是/mq/top/main.go
+			* 特别说明:用队列的异步方式是为了避免在接口中直接执行Mysql的耗时操作, 所有上面的Mysql操作应该挪到异步任务中执行
+		*/
+		// 实时增加评论数
+		videoObj := map[string]int{
+			"videoId": videoId,
+		}
+		videoJson, _ := json.Marshal(videoObj)
+		mq.Publish("", "fyouku_top", string(videoJson))
+
+		/*
+			延时增加评论数
+			数据推给死信队列的A交换机
+			这里实现的是生产者, 消费者是/mq/comment/main.go
+		*/
+		videoCountObj := map[string]int{
+			"VideoId":    videoId,
+			"EpisodesId": episodesId,
+		}
+		videoCountJson, _ := json.Marshal(videoCountObj)
+		mq.PublishDlx("fyouku.comment.count", string(videoCountJson))
 	}
 	return err
 }

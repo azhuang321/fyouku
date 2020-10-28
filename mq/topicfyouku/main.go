@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// 主题模式的消费者
+// 主题模式的消费者demo
 func main() {
 	mq.ConsumerEx("fyouku.demo.topic", "topic", "fyouku.*", callback)
 }
